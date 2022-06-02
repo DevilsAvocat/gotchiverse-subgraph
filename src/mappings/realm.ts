@@ -1,5 +1,5 @@
 import { AlchemicaClaimed, ChannelAlchemica, EquipInstallation, EquipTile, ExitAlchemica, MintParcel, InstallationUpgraded, Transfer, UnequipInstallation, UnequipTile } from "../../generated/RealmDiamond/RealmDiamond";
-import { BIGINT_ONE, StatCategory } from "../helper/constants";
+import { BIGINT_ONE, StatCategory, VAULT_ADDRESS } from "../helper/constants";
 import { getOrCreateInstallationType, getOrCreateTile } from "../helper/installation";
 import { createAlchemicaClaimedEvent, createChannelAlchemicaEvent, createEquipInstallationEvent, createEquipTileEvent, createExitAlchemicaEvent, createInstallationUpgradedEvent, createMintParcelEvent, createParcelInstallation, createParcelTransferEvent, createUnequipInstallationEvent, createUnequipTileEvent, getOrCreateGotchi, getOrCreateParcel, removeParcelInstallation } from "../helper/realm";
 import { getStat, updateAlchemicaClaimedStats, updateChannelAlchemicaStats, updateExitedAlchemicaStats, updateInstallationEquippedStats, updateInstallationUnequippedStats, updateInstallationUpgradedStats, updateTileEquippedStats, updateTileUnequippedStats } from "../helper/stats";
@@ -204,5 +204,8 @@ export function handleTransfer(event: Transfer): void {
     // maintain parcel owner field
     let parcel = getOrCreateParcel(event.params._tokenId);
     parcel.owner = event.params._to;
+    if(event.params._to.equals(VAULT_ADDRESS)){
+        parcel.depositor = event.params._from;
+    }
     parcel.save();
 }

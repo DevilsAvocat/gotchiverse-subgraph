@@ -203,6 +203,7 @@ type Parcel @entity {
   equippedInstallations: [InstallationType!]!
   lastChanneledAlchemica: BigInt
   owner: Bytes
+  depositor: Bytes
 }
 
 type Gotchi @entity {
