@@ -1,6 +1,6 @@
 # Events
 type TransferEvent @entity {
-  id: Bytes!
+  id: ID!
   block: BigInt!
   timestamp: BigInt!
   contract: Bytes
@@ -22,6 +22,9 @@ type ChannelAlchemicaEvent @entity {
 
   gotchi: Gotchi!
   parcel: Parcel!
+
+  parcelOwner: Bytes
+  parcelDepositor: Bytes
 
   alchemica: [BigInt!]!
   spilloverRate: BigInt!

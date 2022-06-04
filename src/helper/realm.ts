@@ -24,6 +24,13 @@ export const getOrCreateGotchi = (gotchiId: BigInt): Gotchi => {
 export const createChannelAlchemicaEvent = (event: ChannelAlchemica): ChannelAlchemicaEvent => {
     let id = event.params._gotchiId.toString() + "-" + event.params._realmId.toString() + "-" + event.block.number.toString();
     let eventEntity = new ChannelAlchemicaEvent(id);
+
+    let gotchi = getOrCreateGotchi(event.params._gotchiId);
+    let parcel = getOrCreateParcel(event.params._realmId);
+
+    eventEntity.parcelOwner = parcel.owner;
+    eventEntity.parcelDepositor = parcel.depositor;
+
     eventEntity.gotchi = event.params._gotchiId.toString();
     eventEntity.parcel = event.params._realmId.toString();
 
@@ -159,7 +166,7 @@ export const createMintParcelEvent = (event: MintParcel): MintParcelEvent => {
 }
 
 export const createParcelTransferEvent = (event: Transfer): TransferEvent => {
-    let entity = new TransferEvent(event.transaction.hash);
+    let entity = new TransferEvent(event.transaction.hash.toHexString());
     entity.block = event.block.number;
     entity.timestamp = event.block.timestamp;
     entity.contract = event.address;
