@@ -26,6 +26,8 @@ type ChannelAlchemicaEvent @entity {
   parcelOwner: Bytes
   parcelDepositor: Bytes
 
+  gotchiDepositor: Bytes
+
   alchemica: [BigInt!]!
   spilloverRate: BigInt!
   spilloverRadius: BigInt!
@@ -212,6 +214,8 @@ type Parcel @entity {
 type Gotchi @entity {
   id: ID!
   lastChanneledAlchemica: BigInt
+  guild: BigInt
+  locked: Boolean
 }
 
 type Tile @entity {

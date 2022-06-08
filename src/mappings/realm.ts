@@ -3,6 +3,7 @@ import { BIGINT_ONE, StatCategory, VAULT_ADDRESS } from "../helper/constants";
 import { getOrCreateInstallationType, getOrCreateTile } from "../helper/installation";
 import { createAlchemicaClaimedEvent, createChannelAlchemicaEvent, createEquipInstallationEvent, createEquipTileEvent, createExitAlchemicaEvent, createInstallationUpgradedEvent, createMintParcelEvent, createParcelInstallation, createParcelTransferEvent, createUnequipInstallationEvent, createUnequipTileEvent, getOrCreateGotchi, getOrCreateParcel, removeParcelInstallation } from "../helper/realm";
 import { getStat, updateAlchemicaClaimedStats, updateChannelAlchemicaStats, updateExitedAlchemicaStats, updateInstallationEquippedStats, updateInstallationUnequippedStats, updateInstallationUpgradedStats, updateTileEquippedStats, updateTileUnequippedStats } from "../helper/stats";
+import { VaultDiamond } from "../../generated/VaultDiamond/VaultDiamond"
 
 export function handleChannelAlchemica(event: ChannelAlchemica): void  {
     // create and persist event
@@ -207,5 +208,6 @@ export function handleTransfer(event: Transfer): void {
     if(event.params._to.equals(VAULT_ADDRESS)){
         parcel.depositor = event.params._from;
     }
+
     parcel.save();
 }

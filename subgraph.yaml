@@ -105,3 +105,27 @@ dataSources:
           handler: handleCraftTimeReduced
         - event: UpgradeTimeReduced(indexed uint256,indexed uint256,uint256,uint256,uint256)
           handler: handleUpgradeTimeReduced
+  - kind: ethereum/contract
+    name: VaultDiamond
+    network: matic
+    source:
+      address: "0xDd564df884Fd4e217c9ee6F65B4BA6e5641eAC63"
+      abi: VaultDiamond
+      startBlock: 23448923
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.6
+      language: wasm/assemblyscript
+      entities:
+        - GuildAssigned
+        - LockedEvent
+      abis:
+        - name: VaultDiamond
+          file: ./abis/VaultDiamond.json
+      eventHandlers:
+        - event: Lock(address,uint256,uint256,bool)
+          handler: handleLock
+      callHandlers:
+        - function: assignGuild(uint256[],uint256)
+          handler: handleAssignGuild
+      file: ./src/mappings/vault.ts
