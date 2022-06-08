@@ -1,7 +1,8 @@
 import { BigInt } from "@graphprotocol/graph-ts";
 import { AlchemicaClaimed, ChannelAlchemica, EquipInstallation, EquipTile, ExitAlchemica, InstallationUpgraded, MintParcel, Transfer, UnequipInstallation, UnequipTile } from "../../generated/RealmDiamond/RealmDiamond";
 import { AlchemicaClaimedEvent, ChannelAlchemicaEvent, EquipInstallationEvent, EquipTileEvent, ExitAlchemicaEvent, Gotchi, InstallationUpgradedEvent, MintParcelEvent, Parcel, TransferEvent, UnequipInstallationEvent, UnequipTileEvent } from "../../generated/schema"
-
+import { VAULT_ADDRESS, GOTCHI_DIAMOND } from "../helper/constants";
+import { VaultDiamond } from '../../generated/VaultDiamond/VaultDiamond'
 
 export const getOrCreateParcel = (realmId: BigInt): Parcel => {
     let id = realmId.toString();
@@ -31,6 +32,16 @@ export const createChannelAlchemicaEvent = (event: ChannelAlchemica): ChannelAlc
 
     eventEntity.parcelOwner = parcel.owner;
     eventEntity.parcelDepositor = parcel.depositor;
+
+    let contract = VaultDiamond.bind(VAULT_ADDRESS);
+    let depositor = contract.try_getDepositor(
+      GOTCHI_DIAMOND, //diamond contract
+      event.params._gotchiId
+    );
+
+    if (!depositor.reverted) {
+       eventEntity.gotchiDepositor = depositor.value;
+    }
 
     eventEntity.gotchi = event.params._gotchiId.toString();
     eventEntity.parcel = event.params._realmId.toString();

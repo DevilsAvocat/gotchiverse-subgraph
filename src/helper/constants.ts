@@ -20,3 +20,4 @@ export const REALM_DIAMOND = Address.fromString("0x1d0360bac7299c86ec8e99d0c1c9a
 export const TILE_DIAMOND = Address.fromString("0x9216c31d8146bCB3eA5a9162Dc1702e8AEDCa355");
 export const INSTALLATION_DIAMOND = Address.fromString("0x19f870bD94A34b3adAa9CaA439d333DA18d6812A");
 export const VAULT_ADDRESS = Address.fromString("0xDd564df884Fd4e217c9ee6F65B4BA6e5641eAC63");
+export const GOTCHI_DIAMOND = Address.fromString("0x86935F11C86623deC8a25696E1C19a8659CbF95d");
